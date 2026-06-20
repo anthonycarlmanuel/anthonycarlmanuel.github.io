@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthony Carl Manuel — Engineer & Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080C14;
+    --bg2: #0E1420;
+    --bg3: #141B2D;
+    --accent: #3B82F6;
+    --accent2: #06B6D4;
+    --accent-glow: rgba(59,130,246,0.15);
+    --green: #10B981;
+    --yellow: #F59E0B;
+    --text: #E8EDF5;
+    --text2: #8B9BB4;
+    --text3: #4A5568;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(59,130,246,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(8,12,20,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text2); text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  .hero-grid svg { width: 100%; height: 100%; opacity: 0.04; }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%; filter: blur(80px); pointer-events: none;
+  }
+  .orb1 { width: 500px; height: 500px; background: rgba(59,130,246,0.12); top: -100px; right: -100px; }
+  .orb2 { width: 300px; height: 300px; background: rgba(6,182,212,0.08); bottom: 100px; left: -50px; }
+
+  .hero-content { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 32px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 .line2 { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--text2);
+    max-width: 560px; margin-bottom: 3rem;
+    font-weight: 400; line-height: 1.7;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+  .tag {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border2);
+    border-radius: 999px;
+    font-size: 0.8rem; color: var(--accent2);
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(6,182,212,0.06);
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 0 24px rgba(59,130,246,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(59,130,246,0.5); }
+  .btn-secondary {
+    padding: 0.85rem 2rem;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--accent-glow); border-color: var(--accent); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: center;
+    gap: 0; overflow-x: auto;
+  }
+  .stat-item {
+    flex: 1; min-width: 160px; max-width: 220px;
+    text-align: center;
+    padding: 0 2rem;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-size: 2rem; font-weight: 700;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace;
+    display: block;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--text2); margin-top: 0.25rem; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::before {
+    content: ''; width: 20px; height: 1px; background: var(--accent);
+  }
+  h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .section-desc { color: var(--text2); font-size: 1.05rem; max-width: 560px; margin-bottom: 3.5rem; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg); }
+  .about-grid {
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 3rem; align-items: center;
+  }
+  .about-photo-wrap {
+    position: relative;
+    width: 200px; height: 200px;
+    margin: 0 auto;
+  }
+  .about-photo-wrap::before {
+    content: '';
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    opacity: 0.5;
+    z-index: 0;
+  }
+  .about-photo {
+    position: relative; z-index: 1;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg);
+    display: block;
+  }
+  .about-text p {
+    color: var(--text2); font-size: 1.02rem;
+    line-height: 1.8; margin-bottom: 1rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+  }
+
+  /* ── SKILLS INTERACTIVE ── */
+  #skills { background: var(--bg2); }
+  .skills-tabs {
+    display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text2);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #fff; font-weight: 600;
+  }
+  .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+  .skills-panel { display: none; }
+  .skills-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .skill-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .skill-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(59,130,246,0.1);
+  }
+  .skill-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .skill-card-icon img { width: 28px; height: 28px; object-fit: contain; filter: grayscale(0%); }
+  .skill-card-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .skill-card-detail { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+  .skill-bar-wrap { margin-top: 0.75rem; height: 3px; background: var(--border); border-radius: 2px; }
+  .skill-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s ease; }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  #experience { background: var(--bg); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+    padding-left: 2rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute; left: -2.45rem; top: 0.4rem;
+    width: 12px; height: 12px;
+    border-radius: 50%; border: 2px solid var(--accent);
+    background: var(--bg);
+    transition: all 0.3s;
+  }
+  .timeline-item:hover .timeline-dot {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--accent2);
+    margin-bottom: 0.4rem; letter-spacing: 0.05em;
+  }
+  .timeline-role { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .timeline-company { font-size: 0.875rem; color: var(--text2); margin-bottom: 1rem; }
+  .timeline-bullets { list-style: none; }
+  .timeline-bullets li {
+    font-size: 0.9rem; color: var(--text2);
+    padding: 0.3rem 0;
+    padding-left: 1rem; position: relative;
+    line-height: 1.6;
+  }
+  .timeline-bullets li::before {
+    content: '▹'; position: absolute; left: 0;
+    color: var(--accent); font-size: 0.75rem; top: 0.35rem;
+  }
+  .exp-badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px; font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 0.5rem; vertical-align: middle;
+  }
+  .badge-blue { background: rgba(59,130,246,0.15); color: var(--accent); }
+  .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+  .badge-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--bg2); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .project-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .project-desc { font-size: 0.875rem; color: var(--text2); line-height: 1.65; margin-bottom: 1.25rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-tag {
+    padding: 0.2rem 0.6rem;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 4px; font-size: 0.72rem;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── INTERACTIVE TERMINAL ── */
+  #terminal-section { background: var(--bg); }
+  .terminal {
+    background: #0D1117;
+    border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    max-width: 700px; margin: 0 auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+  .terminal-bar {
+    background: #161B22;
+    padding: 0.85rem 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .t-red { background: #FF5F57; } .t-yellow { background: #FEBC2E; } .t-green { background: #28C840; }
+  .terminal-title { margin-left: auto; margin-right: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text3); }
+  .terminal-body { padding: 1.5rem; min-height: 320px; }
+  .terminal-output { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.8; }
+  .t-line { display: block; }
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: #E2E8F0; }
+  .t-out { color: var(--text2); }
+  .t-green-text { color: var(--green); }
+  .t-yellow-text { color: var(--yellow); }
+  .t-blue-text { color: var(--accent2); }
+  .t-input-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+  .t-input {
+    background: transparent; border: none; outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; color: #E2E8F0;
+    flex: 1; caret-color: var(--accent);
+  }
+  .terminal-commands {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border);
+    background: #0D1117;
+  }
+  .cmd-btn {
+    padding: 0.3rem 0.8rem;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 4px; color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .cmd-btn:hover { background: rgba(59,130,246,0.25); }
+
+  /* ── CERTIFICATIONS ── */
+  #certifications { background: var(--bg2); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  .cert-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    transition: all 0.2s;
+  }
+  .cert-card:hover { border-color: var(--border2); }
+  .cert-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .cert-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .cert-issuer { font-size: 0.78rem; color: var(--text2); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg); text-align: center; }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-inner h2 { margin-bottom: 1rem; }
+  .contact-inner p { color: var(--text2); margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    text-decoration: none; font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--text3);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer span { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .stats-bar { padding: 1.5rem; }
+    .stat-item { min-width: 120px; padding: 0 1rem; }
+    footer { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">acm.dev</span>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-dot" title="Available for opportunities"></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+    </svg>
+  </div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Registered Mechanical Engineer · Philippines</div>
+    <h1>
+      Anthony Carl Manuel<br>
+      <span class="line2">Engineer. Builder. Educator.</span>
+    </h1>
+    <p class="hero-sub">
+      RME with hands-on experience in production operations, embedded systems, and technical education. I build things that work — from factory floors to robot cars to kids' robotics curriculum.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">ESP32 / Arduino</span>
+      <span class="tag">Mechanical Engineering</span>
+      <span class="tag">IT Operations</span>
+      <span class="tag">Robotics Education</span>
+      <span class="tag">Technical Documentation</span>
+      <span class="tag">AI-Assisted Development</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">See My Work</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num" data-target="2">0</span>
+    <div class="stat-label">Years Engineering Experience</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="5">0</span>
+    <div class="stat-label">Safety Certifications</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="3">0</span>
+    <div class="stat-label">Major Projects Built</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="300" data-suffix="kW">0</span>
+    <div class="stat-label">Largest Generator Commissioned</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">A Little About Me</div>
+    <h2>From the factory floor to the classroom</h2>
+    <div class="about-grid" style="margin-top: 2.5rem;">
+      <div class="about-photo-wrap">
+        <img src="anthony_photo.jpg" alt="Anthony Carl Manuel" class="about-photo">
+      </div>
+      <div class="about-text">
+        <p>I'm a <strong>Registered Mechanical Engineer</strong> based in Pasay, Philippines, with a background that doesn't fit neatly into one box — and I've come to see that as a strength rather than a gap.</p>
+        <p>I've supervised production lines, coordinated maintenance teams, and kept manufacturing equipment running. I've also wired up ESP32 robots, debugged motor logic with AI tools, and taught electronics and robotics to kids as young as 8.</p>
+        <p>I'm currently <strong>expanding into IT and cloud technologies</strong>, building on a foundation of real hands-on engineering and a genuine curiosity for how systems — physical or digital — actually work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">What I Know</div>
+    <h2>Skills & Expertise</h2>
+    <p class="section-desc">Click a category to explore. I work across physical systems, electronics, and digital tools.</p>
+    <div class="skills-tabs">
+      <button class="tab-btn active" onclick="showTab('engineering')">⚙️ Engineering</button>
+      <button class="tab-btn" onclick="showTab('electronics')">🔌 Electronics & Embedded</button>
+      <button class="tab-btn" onclick="showTab('digital')">💻 Digital & IT</button>
+      <button class="tab-btn" onclick="showTab('soft')">🧠 Professional</button>
+    </div>
+    <div id="tab-engineering" class="skills-panel active">
+      <div class="skill-card"><div class="skill-card-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/autocad/autocad-original.svg" alt="AutoCAD" onerror="this.outerHTML='📐'"></div><div class="skill-card-name">AutoCAD</div><div class="skill-card-detail">Basic 2D drafting from university coursework — refreshing skills</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:40%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🧊</div><div class="skill-card-name">SolidWorks</div><div class="skill-card-detail">Basic 3D modeling from university coursework — refreshing skills</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:30%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🏭</div><div class="skill-card-name">Production Supervision</div><div class="skill-card-detail">Hands-on experience overseeing daily plant operations; still building toward senior-level fluency</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🔧</div><div class="skill-card-name">Preventive Maintenance</div><div class="skill-card-detail">Coordinated PM schedules with maintenance teams; working knowledge, not yet expert-level</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🌡️</div><div class="skill-card-name">HVAC & Mechanical Systems</div><div class="skill-card-detail">TESDA-certified in air conditioner servicing; general mechanical systems familiarity</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📋</div><div class="skill-card-name">Technical Documentation</div><div class="skill-card-detail">Comfortable writing engineering reports and compliance documentation</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+    </div>
+    <div id="tab-electronics" class="skills-panel">
+      <div class="skill-card"><div class="skill-card-icon">🤖</div><div class="skill-card-name">ESP32</div><div class="skill-card-detail">WiFi, Bluetooth, motor control, sensor integration, web server</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" alt="Arduino" onerror="this.outerHTML='⚡'"></div><div class="skill-card-name">Arduino Uno</div><div class="skill-card-detail">C++ firmware, LED control, serial comm, sensor reading</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🔌</div><div class="skill-card-name">Circuit Design</div><div class="skill-card-detail">L298N motor driver, ultrasonic sensor, TinkerCAD simulation</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🖨️</div><div class="skill-card-name">3D Printing</div><div class="skill-card-detail">FDM printing, TinkerCAD modeling, printer assembly & calibration</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📡</div><div class="skill-card-name">Dabble / Bluetooth Control</div><div class="skill-card-detail">Wireless robot control via smartphone interface</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🧪</div><div class="skill-card-name">Hardware Debugging</div><div class="skill-card-detail">Motor logic, state flags, directional control troubleshooting</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+    </div>
+    <div id="tab-digital" class="skills-panel">
+      <div class="skill-card"><div class="skill-card-icon">🤖</div><div class="skill-card-name">AI Tools</div><div class="skill-card-detail">ChatGPT & Claude for code generation, curriculum design, documentation</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📊</div><div class="skill-card-name">Microsoft Excel</div><div class="skill-card-detail">KPI tracking, reporting, basic formulas</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📝</div><div class="skill-card-name">Microsoft Word</div><div class="skill-card-detail">Engineering reports, formal documentation, compliance submissions</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🎨</div><div class="skill-card-name">PowerPoint / Canva</div><div class="skill-card-detail">Presentation design, educational slide decks, visual storytelling</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">💻</div><div class="skill-card-name">Basic C/C++</div><div class="skill-card-detail">Embedded systems programming via Arduino IDE</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">☁️</div><div class="skill-card-name">Cloud & IT Awareness</div><div class="skill-card-detail">Currently building knowledge in cloud computing & IT operations</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:25%"></div></div></div>
+    </div>
+    <div id="tab-soft" class="skills-panel">
+      <div class="skill-card"><div class="skill-card-icon">🎓</div><div class="skill-card-name">Technical Teaching</div><div class="skill-card-detail">Explaining complex concepts to young learners — robotics, electronics, coding</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📋</div><div class="skill-card-name">Curriculum Development</div><div class="skill-card-detail">Structured lesson planning, learning objectives, age-appropriate content</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">👥</div><div class="skill-card-name">Team Coordination</div><div class="skill-card-detail">Coordinated with production and maintenance teams; still growing into senior leadership</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🔍</div><div class="skill-card-name">Problem Solving</div><div class="skill-card-detail">Systematic debugging — from factory machines to robot code</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📣</div><div class="skill-card-name">Technical Communication</div><div class="skill-card-detail">Writing reports, presenting findings, adapting language for any audience</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🔄</div><div class="skill-card-name">Adaptability</div><div class="skill-card-detail">Factory → classroom → IT: proven ability to pivot and learn fast</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label">Where I've Been</div>
+    <h2>Experience</h2>
+    <p class="section-desc">From factory floor to robotics classroom — a career built on learning fast and building real things.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">APRIL 2026 – JUNE 2026</div>
+        <div class="timeline-role">Robotics & Electronics Instructor <span class="exp-badge badge-green">Education</span></div>
+        <div class="timeline-company">3DBotics – White & Green Lab Gown Program</div>
+        <ul class="timeline-bullets">
+          <li>Developed tiered curriculum for young learners (ages 8-15): White Lab Gown covering foundational electronics and Green Lab Gown introducing robotics and Arduino</li>
+          <li>Used AI tools (ChatGPT, Claude) to build and debug embedded C++ code for ESP32 robot car projects</li>
+          <li>Designed kid-friendly lesson presentations and structured learning materials</li>
+          <li>Assisted in 3D printing workflows using TinkerCAD and assembled/calibrated FDM printers</li>
+          <li>Supported lead instructor in hands-on classroom sessions covering hardware assembly and programming logic</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">JANUARY 2025 – APRIL 2026</div>
+        <div class="timeline-role">Production Supervisor <span class="exp-badge badge-blue">Manufacturing</span></div>
+        <div class="timeline-company">JNCL Ocean Ventures Inc. · Cabuyao, Laguna</div>
+        <ul class="timeline-bullets">
+          <li>Supervised daily plant operations ensuring equipment reliability and operational continuity</li>
+          <li>Coordinated preventive and corrective maintenance with engineering and maintenance teams</li>
+          <li>Monitored KPIs and implemented corrective actions to reduce equipment downtime</li>
+          <li>Enforced OSHS safety standards and operational procedures across the production floor</li>
+          <li>Prepared operational reports and compliance documentation for management review</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">MAY 2024 – DECEMBER 2024</div>
+        <div class="timeline-role">Production Engineer – Supply Coordinator <span class="exp-badge badge-yellow">Engineering</span></div>
+        <div class="timeline-company">JNCL Ocean Ventures Inc. · Cabuyao, Laguna</div>
+        <ul class="timeline-bullets">
+          <li>Monitored machine performance and troubleshot operational inefficiencies on the production floor</li>
+          <li>Coordinated material flow and inventory to ensure uninterrupted production operations</li>
+          <li>Assisted in PM planning and execution with the engineering team</li>
+          <li>Contributed to process improvement initiatives to enhance system efficiency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">What I've Built</div>
+    <h2>Projects</h2>
+    <p class="section-desc">Real work, real problems solved. Click any card to learn more.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-icon">🤖</div>
+        <div class="project-title">ESP32 Bluetooth Robot Car</div>
+        <div class="project-desc">Built and programmed a fully functional Bluetooth-controlled robot car using ESP32, L298N motor driver, and the Dabble app. Debugged complex motor direction logic and resolved state flag issues in directional control code using AI-assisted development.</div>
+        <div class="project-tags">
+          <span class="project-tag">ESP32</span>
+          <span class="project-tag">C++</span>
+          <span class="project-tag">L298N</span>
+          <span class="project-tag">Bluetooth</span>
+          <span class="project-tag">Dabble</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">⚡</div>
+        <div class="project-title">DENR-EMB Compliance Report (Freelance Proposal)</div>
+        <div class="project-desc">Prepared a complete engineering compliance report and emission computation for a 300 kW Cummins diesel generator set as part of a freelance proposal. Produced formatted Word documents, client data sheets, and a professional cost quotation.</div>
+        <div class="project-tags">
+          <span class="project-tag">300kW Generator</span>
+          <span class="project-tag">DENR-EMB</span>
+          <span class="project-tag">Emissions Calc</span>
+          <span class="project-tag">Documentation</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🎓</div>
+        <div class="project-title">3DBotics Robotics Curriculum</div>
+        <div class="project-desc">Designed a tiered curriculum for young learners (ages 8-15): White Lab Gown covering foundational electronics (electricity, circuits, current flow) and Green Lab Gown introducing robotics, Arduino, the Arduino IDE, and circuit simulation. Produced 12-slide PowerPoint decks with kid-friendly analogies and speaker notes.</div>
+        <div class="project-tags">
+          <span class="project-tag">Arduino</span>
+          <span class="project-tag">TinkerCAD</span>
+          <span class="project-tag">Curriculum Design</span>
+          <span class="project-tag">3D Printing</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">💧</div>
+        <div class="project-title">Automated Irrigation System</div>
+        <div class="project-desc">Thesis project: designed and fabricated a working automated irrigation system as Thesis Leader. Applied mechatronics principles — sensor-triggered actuation, timer-based control, and water delivery optimization for agricultural use.</div>
+        <div class="project-tags">
+          <span class="project-tag">Mechatronics</span>
+          <span class="project-tag">Automation</span>
+          <span class="project-tag">Sensors</span>
+          <span class="project-tag">Thesis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+<section id="terminal-section">
+  <div class="section-inner">
+    <div class="section-label">Interactive</div>
+    <h2>Ask Me Anything</h2>
+    <p class="section-desc">Click a topic below to learn more about me.</p>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot t-red"></div>
+        <div class="t-dot t-yellow"></div>
+        <div class="t-dot t-green"></div>
+        <span class="terminal-title">anthony@portfolio ~ %</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-output" id="terminal-output">
+          <span class="t-line"><span class="t-green-text">Welcome — click a topic below to explore.</span></span>
+          <span class="t-line t-out">Available: <span class="t-blue-text">about</span> · <span class="t-blue-text">skills</span> · <span class="t-blue-text">projects</span> · <span class="t-blue-text">contact</span> · <span class="t-blue-text">why-hire</span></span>
+          <span class="t-line"> </span>
+        </div>
+      </div>
+      <div class="terminal-commands">
+        <button class="cmd-btn" onclick="runCmd('about')">about</button>
+        <button class="cmd-btn" onclick="runCmd('skills')">skills</button>
+        <button class="cmd-btn" onclick="runCmd('projects')">projects</button>
+        <button class="cmd-btn" onclick="runCmd('why-hire')">why-hire</button>
+        <button class="cmd-btn" onclick="runCmd('contact')">contact</button>
+        <button class="cmd-btn" onclick="runCmd('clear')">clear</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner reveal">
+    <div class="section-label">Credentials</div>
+    <h2>Licenses & Certifications</h2>
+    <p class="section-desc">Regulated, certified, and continuously learning.</p>
+    <div class="certs-grid">
+      <div class="cert-card"><div class="cert-icon">🏅</div><div><div class="cert-name">Registered Mechanical Engineer (RME)</div><div class="cert-issuer">Professional Regulation Commission · 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🦺</div><div><div class="cert-name">Mandatory Occupational Safety & Health</div><div class="cert-issuer">PSME · 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">⛑️</div><div><div class="cert-name">Basic OSH – Safety Officer 2</div><div class="cert-issuer">DOLE Accredited</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🏗️</div><div><div class="cert-name">Construction OSH – Safety Officer 2</div><div class="cert-issuer">DOLE Accredited</div></div></div>
+      <div class="cert-card"><div class="cert-icon">📉</div><div><div class="cert-name">Loss Control Management Training</div><div class="cert-issuer">Occupational Safety</div></div></div>
+      <div class="cert-card"><div class="cert-icon">❄️</div><div><div class="cert-name">Packaged Air Conditioner Servicing</div><div class="cert-issuer">TESDA Online Program</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="section-label" style="justify-content:center">Get In Touch</div>
+    <h2>Let's build something together.</h2>
+    <p>Open to opportunities in IT operations, engineering roles, manufacturing, construction, and technical education. Based in Pasay, NCR.</p>
+    <div class="contact-links">
+      <a href="mailto:anthonycarlmanuel@gmail.com" class="contact-link">📧 anthonycarlmanuel@gmail.com</a>
+      <a href="tel:+639638559584" class="contact-link">📱 0963-855-9584</a>
+    </div>
+    <a href="mailto:anthonycarlmanuel@gmail.com" class="btn-primary">Send Me a Message</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Anthony Carl Manuel</span>
+  <span>RME · Builder · Educator</span>
+  <span>Pasay, NCR · Philippines</span>
+</footer>
+
+<script>
+// ── TAB SWITCHING ──
+function showTab(id) {
+  document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── COUNTER ANIMATION ──
+function animateCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const step = target / 40;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+  });
+}
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+// counter fires once when stats bar is visible
+const statsObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    animateCounters();
+    statsObserver.disconnect();
+  }
+}, { threshold: 0.3 });
+statsObserver.observe(document.querySelector('.stats-bar'));
+
+// ── TERMINAL ──
+const commands = {
+  about: [
+    '<span class="t-green-text">── About Anthony Carl Manuel ──</span>',
+    '<span class="t-out">Name    : Anthony Carl Manuel</span>',
+    '<span class="t-out">Title   : Registered Mechanical Engineer (RME)</span>',
+    '<span class="t-out">Location: Pasay, NCR, Philippines</span>',
+    '<span class="t-out">Email   : anthonycarlmanuel@gmail.com</span>',
+    '<span class="t-out">Phone   : 0963-855-9584</span>',
+    ' ',
+    '<span class="t-out">Engineer by training. Builder by nature. Educator by choice.</span>',
+    '<span class="t-out">I bridge physical systems (factories, machines) with digital</span>',
+    '<span class="t-out">technology (ESP32, AI tools, embedded systems).</span>',
+  ],
+  skills: [
+    '<span class="t-green-text">── Top Skills ──</span>',
+    '<span class="t-blue-text">[Engineering]</span>  <span class="t-out">AutoCAD · SolidWorks · Production Supervision · PM</span>',
+    '<span class="t-blue-text">[Electronics]</span>  <span class="t-out">ESP32 · Arduino · C++ · Circuit Design · 3D Printing</span>',
+    '<span class="t-blue-text">[Digital]    </span>  <span class="t-out">AI Tools · MS Office · PowerPoint · Canva</span>',
+    '<span class="t-blue-text">[Safety]     </span>  <span class="t-out">OSHS · Safety Officer 2 · Loss Control</span>',
+    '<span class="t-blue-text">[Education]  </span>  <span class="t-out">Curriculum Design · Teaching · Technical Communication</span>',
+  ],
+  projects: [
+    '<span class="t-green-text">── Projects ──</span>',
+    '<span class="t-yellow-text">[1]</span> <span class="t-out">ESP32 Bluetooth Robot Car</span>',
+    '    <span class="t-out">→ Built + debugged full robot car with motor control via Bluetooth</span>',
+    '<span class="t-yellow-text">[2]</span> <span class="t-out">DENR-EMB Compliance Report (Freelance Proposal) – 300kW Generator</span>',
+    '    <span class="t-out">→ Full engineering + emission compliance documentation</span>',
+    '<span class="t-yellow-text">[3]</span> <span class="t-out">3DBotics Robotics Curriculum</span>',
+    '    <span class="t-out">→ Tiered curriculum (ages 8-15): electronics, Arduino, 3D printing</span>',
+    '<span class="t-yellow-text">[4]</span> <span class="t-out">Automated Irrigation System (Thesis)</span>',
+    '    <span class="t-out">→ Sensor-triggered automated water delivery system</span>',
+  ],
+  'why-hire': [
+    '<span class="t-green-text">── Why Hire Anthony? ──</span>',
+    '<span class="t-out">✓ Licensed RME — rare in IT/tech applicants</span>',
+    '<span class="t-out">✓ Real hardware experience (ESP32, motors, sensors)</span>',
+    '<span class="t-out">✓ Already uses AI tools in real workflows</span>',
+    '<span class="t-out">✓ Can explain complex topics to non-technical people</span>',
+    '<span class="t-out">✓ Systems thinker — from factory floors to robot code</span>',
+    '<span class="t-out">✓ Adaptable — proven across manufacturing, education, IT</span>',
+    ' ',
+    '<span class="t-green-text">The engineer who can also teach. The builder who debugs.</span>',
+  ],
+  contact: [
+    '<span class="t-green-text">── Contact ──</span>',
+    '<span class="t-out">📧 anthonycarlmanuel@gmail.com</span>',
+    '<span class="t-out">📱 0963-855-9584</span>',
+    '<span class="t-out">📍 Pasay, NCR, Philippines</span>',
+    '<span class="t-out">🌐 anthonycarlmanuel.github.io</span>',
+    ' ',
+    '<span class="t-out">Open to: IT Operations · Manufacturing · Construction · Education</span>',
+  ],
+  clear: null
+};
+
+function runCmd(cmd) {
+  const output = document.getElementById('terminal-output');
+  const c = cmd.toLowerCase().trim();
+
+  if (c === 'clear') {
+    output.innerHTML = '<span class="t-line"><span class="t-green-text">Terminal cleared. Click a topic to continue.</span></span><span class="t-line"> </span>';
+    return;
+  }
+
+  // Echo command
+  const cmdLine = document.createElement('span');
+  cmdLine.className = 't-line';
+  cmdLine.innerHTML = `<span class="t-prompt">anthony@portfolio ~ $</span> <span class="t-cmd">${c}</span>`;
+  output.appendChild(cmdLine);
+
+  const lines = commands[c];
+  if (lines) {
+    lines.forEach(line => {
+      const el = document.createElement('span');
+      el.className = 't-line';
+      el.innerHTML = line;
+      output.appendChild(el);
+    });
+  } else {
+    const el = document.createElement('span');
+    el.className = 't-line';
+    el.innerHTML = `<span style="color:#F87171">Command not found: ${c}. Try: about · skills · projects · why-hire · contact · clear</span>`;
+    output.appendChild(el);
+  }
+
+  const spacer = document.createElement('span');
+  spacer.className = 't-line';
+  spacer.innerHTML = ' ';
+  output.appendChild(spacer);
+
+  output.parentElement.scrollTop = output.parentElement.scrollHeight;
+}
+</script>
+</body>
+</html>
